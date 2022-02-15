@@ -1,5 +1,5 @@
 {
-  "name": "01-github-explorer",
+  "name": "to-do-list",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -9,9 +9,11 @@
     "test": "jest --watchAll"
   },
   "dependencies": {
+    "@types/uuid": "^8.3.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-icons": "^4.2.0"
+    "react-icons": "^4.2.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",

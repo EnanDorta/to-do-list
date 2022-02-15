@@ -1,29 +1,46 @@
 import { useState } from 'react'
-
+import { v4 as uuidv4 } from 'uuid';
 import '../styles/tasklist.scss'
 
 import { FiTrash, FiCheckSquare } from 'react-icons/fi'
 
 interface Task {
-  id: number;
+  id: string;
   title: string;
   isComplete: boolean;
 }
 
+
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
+  const uniqueId = uuidv4()
+  console.log(tasks)
 
   function handleCreateNewTask() {
-    // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+    // Cria uma nova task com um id random, não permite criar caso o título seja vazio.
+    if (newTaskTitle === "") return
+    const newTask = {
+      id: uniqueId,
+      title: newTaskTitle,
+      isComplete: false,
+    }
+    setTasks([...tasks, newTask])
   }
 
-  function handleToggleTaskCompletion(id: number) {
+  function handleToggleTaskCompletion(id: string) {
     // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
+    const taskChange = tasks.map(task => task.id === id ? {
+      ...task,
+      isComplete: !task.isComplete
+    }: task)
+    setTasks(taskChange)
   }
 
-  function handleRemoveTask(id: number) {
-    // Remova uma task da listagem pelo ID
+  function handleRemoveTask(id: string) {
+    // Remove uma task da listagem pelo ID
+    const filterTasks = tasks.filter(task => task.id  !== id);
+    setTasks(filterTasks)
   }
 
   return (
@@ -46,6 +63,7 @@ export function TaskList() {
 
       <main>
         <ul>
+          {/* Da um map em tasks, e renderiza em tela uma task*/}
           {tasks.map(task => (
             <li key={task.id}>
               <div className={task.isComplete ? 'completed' : ''} data-testid="task" >
